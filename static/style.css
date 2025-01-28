@@ -1,0 +1,281 @@
+/* General styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    box-sizing: border-box;
+}
+
+/* Main container for user list and chat box */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack vertically on small screens */
+    gap: 10px;
+    width: 100%;
+    max-width: 800px; /* Limit maximum width */
+    flex: 1; /* Take up remaining space */
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0 auto; /* Center the container */
+}
+
+/* User list */
+#user-list {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    order: 1; /* Move user list below chat box on small screens */
+    max-height: 85vh; /* Set a maximum height for the user list */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Chat container */
+#chat-box {
+    width: 100%;
+    flex: 1; /* Take up remaining space */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable vertical scrolling */
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    order: 2; /* Ensure chat box is above user list on small screens */
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Add spacing between messages */
+    max-height: 85vh; /* Set a maximum height for the chat box */
+}
+
+/* Input container */
+.input-container {
+    width: 100%;
+    max-width: 800px; /* Match container width */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 1px solid #ddd; /* Add a border */
+    border-radius: 10px; /* Rounded corners */
+    margin: 10px auto; /* Center the input container */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for consistency */
+}
+
+/* Username display */
+#username-display {
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Input field (textarea) */
+#message-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    resize: none; /* Prevent manual resizing */
+    overflow-y: hidden; /* Hide scrollbar */
+    line-height: 1.5; /* Improve readability */
+    height: 40px; /* Set a fixed initial height */
+    box-sizing: border-box; /* Ensure padding is included in the height */
+}
+
+#message-input:focus {
+    border-color: #007bff;
+}
+
+/* Send button */
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive design for larger screens */
+@media (min-width: 768px) {
+    .container {
+        flex-direction: row; /* Side-by-side layout on larger screens */
+        gap: 20px;
+    }
+
+    #user-list {
+        width: 200px; /* Fixed width for user list */
+        order: 1; /* Move user list to the left */
+    }
+
+    #chat-box {
+        width: calc(100% - 220px); /* Adjust width to fit beside user list */
+        order: 2; /* Move chat box to the right */
+    }
+}
+
+/* Responsive design for very small screens */
+@media (max-width: 480px) {
+    #user-list, #chat-box, .input-container {
+        width: 100%; /* Full width on very small screens */
+        padding: 20px;
+    }
+
+    #username-display {
+        font-size: 12px; /* Smaller font size for username */
+    }
+
+    #message-input {
+        font-size: 12px; /* Smaller font size for input */
+    }
+
+    button {
+        padding: 8px 16px; /* Smaller button */
+        font-size: 12px;
+    }
+}
+
+/* Code block styles */
+pre {
+    background-color: #1e1e1e; /* Black background */
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 10px 0;
+    color: #d4d4d4; /* Light text color */
+}
+
+code {
+    font-family: monospace;
+    background-color: #1e1e1e; /* Black background */
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #d4d4d4; /* Light text color */
+}
+
+/* Highlight.js theme overrides */
+.hljs {
+    background-color: #1e1e1e; /* Black background */
+    color: #d4d4d4; /* Light text color */
+}
+
+/* Chat message styles */
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px; /* Very small spacing between messages */
+    width: 100%; /* Ensure the message takes the full width */
+}
+
+.chat-message .username {
+    font-weight: bold;
+    margin-bottom: 2px; /* Small spacing between username and message */
+    color: #333;
+    font-size: 12px; /* Smaller font size for username */
+    display: none; /* Hide username by default */
+}
+
+.chat-message .message-content {
+    padding: 2px 6px; /* Compact padding */
+    border-radius: 7px; /* Slightly rounded corners for bubble effect */
+    background-color: #f1f1f1; /* Default background for received messages */
+    color: #333;
+    max-width: 80%; /* Limit width for bubble effect */
+    word-wrap: break-word;
+    font-size: 14px; /* Smaller font size for messages */
+    line-height: 1.5; /* Improved line height */
+    position: relative;
+}
+
+/* Show username only for the first message in a group */
+.chat-message:not(.same-user) .username {
+    display: block; /* Show username */
+}
+
+/* Sent messages (current user) */
+.chat-message.sent {
+    align-items: flex-end; /* Align to the right */
+}
+
+.chat-message.sent .message-content {
+    background-color: #007bff; /* Blue background for sent messages */
+    color: white; /* White text for sent messages */
+    border-bottom-right-radius: 2px; /* Adjust bubble shape */
+}
+
+/* Received messages (other users) */
+.chat-message.received {
+    align-items: flex-start; /* Align to the left */
+}
+
+.chat-message.received .message-content {
+    background-color: #f1f1f1; /* Light gray background for received messages */
+    color: #333; /* Dark text for received messages */
+    border-bottom-left-radius: 2px; /* Adjust bubble shape */
+}
+
+/* System messages (join/leave notifications) */
+.chat-message.system {
+    align-items: center;
+}
+
+.chat-message.system .message-content {
+    background-color: #e0e0e0; /* Light gray for system messages */
+    color: #555;
+    font-size: 12px; /* Smaller font size for system messages */
+    padding: 6px 10px; /* Compact padding */
+    border-radius: 10px; /* Slight rounding for system messages */
+    border: none; /* No border for system messages */
+}
+
+/* Remove margin for consecutive messages from the same user */
+.chat-message.same-user {
+    margin-top: -2px; /* Overlap messages slightly */
+}
+
+/* Markdown list styles */
+.message-content ul,
+.message-content ol {
+    margin: 6px 0; /* Add some margin around lists */
+    padding-left: 20px; /* Indent lists */
+}
+
+.message-content ul {
+    list-style-type: disc; /* Use bullets for unordered lists */
+}
+
+.message-content ol {
+    list-style-type: decimal; /* Use numbers for ordered lists */
+}
+
+.message-content li {
+    margin-bottom: 4px; /* Add spacing between list items */
+}

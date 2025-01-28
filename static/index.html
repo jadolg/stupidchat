@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stupid Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Highlight.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+    <!-- Include marked and DOMPurify -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div id="user-list"></div> <!-- Connected users list -->
+    <div id="chat-box"></div> <!-- Chat messages -->
+</div>
+<div class="input-container">
+    <div id="username-display"></div> <!-- Username display -->
+    <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
+    <button onclick="sendMessage()">Send</button>
+</div>
+<!-- Include Highlight.js JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

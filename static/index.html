@@ -15,11 +15,24 @@
 <div class="container">
     <div id="user-list"></div> <!-- Connected users list -->
     <div id="chat-box"></div> <!-- Chat messages -->
+    <div id="file-list">
+        <strong>Uploaded Files</strong>
+        <ul id="uploaded-files"></ul>
+    </div>
 </div>
-<div class="input-container">
-    <div id="username-display"></div> <!-- Username display -->
-    <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
-    <button onclick="sendMessage()">Send</button>
+<div class="input-section">
+    <div class="input-container">
+        <div id="username-display"></div> <!-- Username display -->
+        <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <div class="file-upload-container">
+        <form id="file-upload-form">
+            <input type="file" id="file-input" name="file" required>
+            <input type="hidden" name="username" id="upload-username">
+            <button type="submit">Upload File</button>
+        </form>
+    </div>
 </div>
 <!-- Include Highlight.js JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>

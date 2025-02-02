@@ -4,8 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
+	"io"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"sync"
 )
 
@@ -21,10 +24,11 @@ type Client struct {
 }
 
 type Message struct {
-	Type     string   `json:"type"` // "message", "user_join", "user_leave"
+	Type     string   `json:"type"` // "message", "user_join", "user_leave", "file_upload"
 	Username string   `json:"username"`
 	Message  string   `json:"message"`
-	Users    []string `json:"users"` // List of connected users
+	Users    []string `json:"users"`              // List of connected users
+	FileName string   `json:"fileName,omitempty"` // File name for file uploads
 }
 
 var (
@@ -33,7 +37,15 @@ var (
 	messageHistory []Message // Slice to store the latest messages
 )
 
-const maxMessageHistory = 10 // Number of latest messages to store
+const maxMessageHistory = 10  // Number of latest messages to store
+const uploadDir = "./uploads" // Directory to store uploaded files
+
+func init() {
+	// Create the upload directory if it doesn't exist
+	if err := os.MkdirAll(uploadDir, os.ModePerm); err != nil {
+		log.Fatal("Failed to create upload directory:", err)
+	}
+}
 
 func broadcast(message []byte) {
 	mutex.Lock()
@@ -156,11 +168,85 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func handleFileUpload(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		http.Error(w, "Unable to read file", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	// Save the file to the upload directory
+	filePath := filepath.Join(uploadDir, header.Filename)
+	outFile, err := os.Create(filePath)
+	if err != nil {
+		http.Error(w, "Unable to save file", http.StatusInternalServerError)
+		return
+	}
+	defer outFile.Close()
+
+	_, err = io.Copy(outFile, file)
+	if err != nil {
+		http.Error(w, "Unable to save file", http.StatusInternalServerError)
+		return
+	}
+
+	// Broadcast the file upload event
+	username := r.FormValue("username")
+	uploadMessage := Message{
+		Type:     "file_upload",
+		Username: username,
+		FileName: header.Filename,
+	}
+	uploadMessageBytes, _ := json.Marshal(uploadMessage)
+	broadcast(uploadMessageBytes)
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("File uploaded successfully"))
+}
+
+func handleFileDownload(w http.ResponseWriter, r *http.Request) {
+	fileName := r.URL.Query().Get("file")
+	if fileName == "" {
+		http.Error(w, "File name is required", http.StatusBadRequest)
+		return
+	}
+
+	filePath := filepath.Join(uploadDir, fileName)
+	http.ServeFile(w, r, filePath)
+}
+
+func handleUploadedFiles(w http.ResponseWriter, r *http.Request) {
+	files, err := os.ReadDir(uploadDir)
+	if err != nil {
+		http.Error(w, "Unable to read upload directory", http.StatusInternalServerError)
+		return
+	}
+
+	fileNames := make([]string, 0, len(files))
+	for _, file := range files {
+		if !file.IsDir() {
+			fileNames = append(fileNames, file.Name())
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(fileNames)
+}
+
 func main() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/", fs)
 
 	http.HandleFunc("/ws", handleWebSocket)
+	http.HandleFunc("/upload", handleFileUpload)
+	http.HandleFunc("/download", handleFileDownload)
+	http.HandleFunc("/uploaded-files", handleUploadedFiles)
 
 	fmt.Println("Server is running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)

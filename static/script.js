@@ -1,7 +1,27 @@
-window.onload = function() {
+let justLoaded = false;
+
+window.onload = function () {
     document.getElementById("message-input").focus();
     requestNotificationPermission();
+    justLoaded = true;
+    fetchUploadedFiles(); // Fetch and display uploaded files on page load
 };
+
+// Function to fetch and display uploaded files
+function fetchUploadedFiles() {
+    fetch("/uploaded-files")
+        .then(response => response.json())
+        .then(files => {
+            const fileList = document.getElementById("uploaded-files");
+            fileList.innerHTML = ""; // Clear the existing list
+            files.forEach(file => {
+                fileList.insertAdjacentHTML("beforeend", `<li><a href="/download?file=${file}" download="${file}">${file}</a></li>`);
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching uploaded files:", error);
+        });
+}
 
 // Function to request notification permission
 function requestNotificationPermission() {
@@ -17,7 +37,7 @@ function requestNotificationPermission() {
 // Function to show a notification
 function showNotification(title, body) {
     if (Notification.permission === "granted") {
-        new Notification(title, { body });
+        new Notification(title, {body});
     }
 }
 
@@ -102,10 +122,11 @@ function connectWebSocket() {
                 applySyntaxHighlighting();
 
                 // Show a notification if the message is not from the current user
-                if (!isCurrentUser) {
+                if (!isCurrentUser && !justLoaded) {
                     showNotification(data.username, data.message);
+                    justLoaded = false;
                 }
-                
+
                 break;
 
             case "user_list":
@@ -127,6 +148,17 @@ function connectWebSocket() {
                 const chatBoxLeave = document.getElementById("chat-box");
                 chatBoxLeave.insertAdjacentHTML("beforeend", `<div class="chat-message system"><div class="message-content">${leaveMessage}</div></div>`);
                 chatBoxLeave.scrollTop = chatBoxLeave.scrollHeight; // Auto-scroll to the bottom
+                break;
+            case "file_upload":
+                // Display the file upload event
+                const fileMessage = `${data.username} uploaded a file: <a href="/download?file=${data.fileName}" download="${data.fileName}">${data.fileName}</a>`;
+                const chatBoxFile = document.getElementById("chat-box");
+                chatBoxFile.insertAdjacentHTML("beforeend", `<div class="chat-message system"><div class="message-content">${fileMessage}</div></div>`);
+                chatBoxFile.scrollTop = chatBoxFile.scrollHeight; // Auto-scroll to the bottom
+
+                // Add the file to the uploaded files list
+                const fileList = document.getElementById("uploaded-files");
+                fileList.insertAdjacentHTML("beforeend", `<li><a href="/download?file=${data.fileName}" download="${data.fileName}">${data.fileName}</a></li>`);
                 break;
         }
     };
@@ -203,3 +235,29 @@ function sendMessage() {
         input.style.height = "auto"; // Reset height after sending
     }
 }
+
+
+// Set the username for the file upload form
+document.getElementById("upload-username").value = username;
+
+// Handle file upload form submission
+document.getElementById("file-upload-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("file", document.getElementById("file-input").files[0]);
+    formData.append("username", username);
+
+    fetch("/upload", {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => response.text())
+        .then((data) => {
+            console.log(data);
+            document.getElementById("file-input").value = ""; // Clear the file input
+        })
+        .catch((error) => {
+            console.error("Error uploading file:", error);
+        });
+});

@@ -16,7 +16,7 @@ body {
     flex-direction: column; /* Stack vertically on small screens */
     gap: 10px;
     width: 100%;
-    max-width: 800px; /* Limit maximum width */
+    max-width: 1200px; /* Limit maximum width */
     flex: 1; /* Take up remaining space */
     padding: 10px;
     box-sizing: border-box;
@@ -42,7 +42,7 @@ body {
 /* Chat container */
 #chat-box {
     width: 100%;
-    flex: 1; /* Take up remaining space */
+    flex: 2; /* Take up remaining space */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -61,18 +61,31 @@ body {
 
 /* Input container */
 .input-container {
-    width: 100%;
-    max-width: 800px; /* Match container width */
+    width: 65%;
+}
+
+.file-upload-container {
+    width: 35%;
+}
+
+.input-container, .file-upload-container {
     display: flex;
     align-items: center;
-    gap: 10px;
     padding: 10px;
     box-sizing: border-box;
     background-color: #fff;
     border: 1px solid #ddd; /* Add a border */
     border-radius: 10px; /* Rounded corners */
-    margin: 10px auto; /* Center the input container */
+    margin: 2px auto; /* Center the input container */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for consistency */
+}
+
+.input-section {
+    width: 100%;
+    max-width: 1300px; /* Match container width */
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
 }
 
 /* Username display */
@@ -136,27 +149,6 @@ button:hover {
     #chat-box {
         width: calc(100% - 220px); /* Adjust width to fit beside user list */
         order: 2; /* Move chat box to the right */
-    }
-}
-
-/* Responsive design for very small screens */
-@media (max-width: 480px) {
-    #user-list, #chat-box, .input-container {
-        width: 100%; /* Full width on very small screens */
-        padding: 20px;
-    }
-
-    #username-display {
-        font-size: 12px; /* Smaller font size for username */
-    }
-
-    #message-input {
-        font-size: 12px; /* Smaller font size for input */
-    }
-
-    button {
-        padding: 8px 16px; /* Smaller button */
-        font-size: 12px;
     }
 }
 
@@ -278,4 +270,42 @@ code {
 
 .message-content li {
     margin-bottom: 4px; /* Add spacing between list items */
+}
+
+#file-list {
+    position: relative; /* Ensure absolute positioning works */
+    width: 100%;
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable vertical scrolling */
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    order: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Add spacing between messages */
+    max-height: 85vh; /* Set a maximum height for the chat box */
+}
+
+#uploaded-files {
+    list-style-type: none;
+    padding: 0;
+}
+
+#uploaded-files li {
+    margin: 5px 0;
+}
+
+#uploaded-files a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#uploaded-files a:hover {
+    text-decoration: underline;
 }

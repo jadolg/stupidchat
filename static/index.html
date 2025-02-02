@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stupid Chat</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Include Highlight.js CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
-    <!-- Include marked and DOMPurify -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+    <!-- Inline critical CSS to avoid render-blocking -->
+    <style>
+        /* Minimal critical CSS for initial rendering */
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .container { display: flex; flex-direction: column; height: 100vh; }
+        #chat-box { flex: 1; overflow-y: auto; padding: 10px; }
+        .input-section { padding: 10px; background: #f9f9f9; border-top: 1px solid #ddd; }
+        .input-container { display: flex; gap: 10px; }
+        textarea { flex: 1; padding: 10px; resize: none; }
+        button { padding: 10px 20px; cursor: pointer; }
+        #file-list { padding: 10px; background: #f1f1f1; }
+    </style>
+    <!-- Defer non-critical CSS -->
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Preload external scripts -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/marked/marked.min.js" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js" as="script">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js" as="script">
 </head>
 <body>
 <div class="container">
@@ -34,8 +51,10 @@
         </form>
     </div>
 </div>
-<!-- Include Highlight.js JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-<script src="script.js"></script>
+<!-- Defer non-critical JavaScript -->
+<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script defer src="script.js"></script>
 </body>
 </html>

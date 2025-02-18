@@ -66,8 +66,23 @@ function stringToColor(str) {
     return color;
 }
 
-// Generate a username for the current user
-const username = generateUsername();
+// Function to get or generate a username
+function getOrGenerateUsername() {
+    // Try to get the username from localStorage
+    const savedUsername = localStorage.getItem('chatUsername');
+    if (savedUsername) {
+        return savedUsername;
+    }
+
+    // Generate a new username if none exists
+    const newUsername = generateUsername();
+    // Save it to localStorage
+    localStorage.setItem('chatUsername', newUsername);
+    return newUsername;
+}
+
+// Replace the username generation line with
+const username = getOrGenerateUsername();
 console.log("Your username is:", username);
 
 // Display the username with its color

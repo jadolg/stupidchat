@@ -1,9 +1,11 @@
 package main
 
 import (
+	"embed"
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
@@ -15,6 +17,12 @@ import (
 
 	"github.com/gorilla/websocket"
 )
+
+//go:embed static/*
+var staticFiles embed.FS
+
+//go:embed assets/*
+var assetFiles embed.FS
 
 // Config holds application configuration
 type Config struct {
@@ -312,12 +320,19 @@ func handleUploadedFiles(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/", fs)
+	// Serve static files from embedded FS
+	staticFS, err := fs.Sub(staticFiles, "static")
+	if err != nil {
+		log.Fatal("Failed to create sub FS for static files:", err)
+	}
+	http.Handle("/", http.FileServer(http.FS(staticFS)))
 
-	// Serve asset files from the assets directory
-	assets := http.FileServer(http.Dir("assets"))
-	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
+	// Serve asset files from embedded FS
+	assetFS, err := fs.Sub(assetFiles, "assets")
+	if err != nil {
+		log.Fatal("Failed to create sub FS for asset files:", err)
+	}
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.FS(assetFS))))
 
 	http.HandleFunc("/ws", handleWebSocket)
 	http.HandleFunc("/upload", handleFileUpload)

@@ -93,6 +93,7 @@ function connectWebSocket() {
 
     ws.onclose = () => {
         console.log("Disconnected from WebSocket server. Attempting to reconnect...");
+        fetchUploadedFiles()
         setTimeout(connectWebSocket, reconnectInterval);
     };
 

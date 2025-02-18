@@ -287,14 +287,14 @@ code {
 }
 
 .chat-message .message-content {
-    padding: 2px 6px; /* Compact padding */
+    padding: 1px 10px; /* Compact padding */
     border-radius: 7px; /* Slightly rounded corners for bubble effect */
     background-color: #f1f1f1; /* Default background for received messages */
     color: #333;
     max-width: 80%; /* Limit width for bubble effect */
     word-wrap: break-word;
     font-size: 14px; /* Smaller font size for messages */
-    line-height: 1.5; /* Improved line height */
+    line-height: 1.2; /* Improved line height */
     position: relative;
 }
 

@@ -205,6 +205,44 @@ button:hover {
     }
 }
 
+@media (max-width: 767px) {
+    .container {
+        padding: 5px;
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .input-section {
+        padding: 0;
+        margin: 5px 0;
+        max-width: 100%;
+        flex-direction: column;
+    }
+
+    .input-container, .file-upload-container {
+        width: calc(100% - 10px) !important;
+        margin: 2px auto;
+        padding: 5px;
+    }
+
+    #message-input, #file-input {
+        width: calc(100% - 10px);
+        padding: 5px;
+    }
+
+    #user-list, #chat-box {
+        max-width: calc(100% - 10px);
+        padding: 5px;
+        margin: 2px auto;
+    }
+
+    #file-list {
+        max-width: calc(100% - 20px);
+        padding: 5px;
+        margin: 2px auto;
+    }
+}
+
 /* Code block styles */
 pre {
     background-color: #1e1e1e; /* Black background */

@@ -312,9 +312,13 @@ func handleUploadedFiles(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// Set up HTTP routes
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/", fs)
+
+	// Serve asset files from the assets directory
+	assets := http.FileServer(http.Dir("assets"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", assets))
+
 	http.HandleFunc("/ws", handleWebSocket)
 	http.HandleFunc("/upload", handleFileUpload)
 	http.HandleFunc("/download", handleFileDownload)

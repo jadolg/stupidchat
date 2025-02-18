@@ -19,14 +19,11 @@
     <!-- Defer non-critical CSS -->
     <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="style.css"></noscript>
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <!-- Preload external scripts -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/marked/marked.min.js" as="script">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js" as="script">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js" as="script">
+    <link rel="preload" href="/assets/highlight.js.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/assets/marked.min.js" as="script">
+    <link rel="preload" href="/assets/purify.min.js" as="script">
+    <link rel="preload" href="/assets/highlight.min.js" as="script">
 </head>
 <body>
 <div class="container">
@@ -52,9 +49,9 @@
     </div>
 </div>
 <!-- Defer non-critical JavaScript -->
-<script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script defer src="/assets/marked.min.js"></script>
+<script defer src="/assets/purify.min.js"></script>
+<script defer src="/assets/highlight.js.min.css"></script>
 <script defer src="script.js"></script>
 </body>
 </html>

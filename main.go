@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"io/fs"
@@ -343,7 +344,7 @@ func main() {
 	server := &http.Server{Addr: config.ServerAddress}
 	go func() {
 		fmt.Println("Server is running on http://localhost" + config.ServerAddress)
-		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			log.Fatal("Server error:", err)
 		}
 	}()

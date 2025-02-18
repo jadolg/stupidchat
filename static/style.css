@@ -108,22 +108,23 @@ body {
 }
 
 .input-container, .file-upload-container {
+    width: 100%;
     display: flex;
     align-items: center;
     padding: 10px;
     box-sizing: border-box;
     background-color: #fff;
-    border: 1px solid #ddd; /* Add a border */
-    border-radius: 10px; /* Rounded corners */
-    margin: 2px auto; /* Center the input container */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for consistency */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 2px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .input-section {
     width: 100%;
-    max-width: 1300px; /* Match container width */
+    max-width: 1300px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin: 10px auto;
 }
 
@@ -188,6 +189,19 @@ button:hover {
     #chat-box {
         width: calc(100% - 220px); /* Adjust width to fit beside user list */
         order: 2; /* Move chat box to the right */
+    }
+
+    .input-section {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .input-container {
+        width: 65%;
+    }
+
+    .file-upload-container {
+        width: 35%;
     }
 }
 

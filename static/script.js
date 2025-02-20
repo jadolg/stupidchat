@@ -7,6 +7,17 @@ window.onload = function () {
     fetchUploadedFiles(); // Fetch and display uploaded files on page load
 };
 
+// Add offline/online event handlers
+window.addEventListener('online', () => showSystemMessage('You are back online'));
+window.addEventListener('offline', () => showSystemMessage('You are now offline'));
+
+// Function to show system messages in the chat box
+function showSystemMessage(message) {
+    const chatBox = document.getElementById("chat-box");
+    chatBox.insertAdjacentHTML("beforeend", `<div class="chat-message system"><div class="message-content">${message}</div></div>`);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
 // Function to fetch and display uploaded files
 function fetchUploadedFiles() {
     fetch("/uploaded-files")
@@ -103,11 +114,15 @@ function connectWebSocket() {
 
     ws.onopen = () => {
         console.log("Connected to WebSocket server");
+        if (!justLoaded) {
+            showSystemMessage('You are back online');
+        }
         ws.send(username); // Send the username to the server
     };
 
     ws.onclose = () => {
         console.log("Disconnected from WebSocket server. Attempting to reconnect...");
+        showSystemMessage('You are now offline');
         fetchUploadedFiles()
         setTimeout(connectWebSocket, reconnectInterval);
     };
@@ -140,8 +155,8 @@ function connectWebSocket() {
                 // Show a notification if the message is not from the current user
                 if (!isCurrentUser && !justLoaded) {
                     showNotification(data.username, data.message);
-                    justLoaded = false;
                 }
+                justLoaded = false;
 
                 break;
 

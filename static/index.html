@@ -2,56 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stupid Chat</title>
-    <!-- Inline critical CSS to avoid render-blocking -->
-    <style>
-        /* Minimal critical CSS for initial rendering */
-        body { margin: 0; font-family: Arial, sans-serif; }
-        .container { display: flex; flex-direction: column; height: 100vh; }
-        #chat-box { flex: 1; overflow-y: auto; padding: 10px; }
-        .input-section { padding: 10px; background: #f9f9f9; border-top: 1px solid #ddd; }
-        .input-container { display: flex; gap: 10px; }
-        textarea { flex: 1; padding: 10px; resize: none; }
-        button { padding: 10px 20px; cursor: pointer; }
-        #file-list { padding: 10px; background: #f1f1f1; }
-    </style>
-    <!-- Defer non-critical CSS -->
-    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="style.css"></noscript>
-    <!-- Preload external scripts -->
-    <link rel="preload" href="/assets/highlight.js.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <link rel="preload" href="/assets/marked.min.js" as="script">
-    <link rel="preload" href="/assets/purify.min.js" as="script">
-    <link rel="preload" href="/assets/highlight.min.js" as="script">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/assets/highlight.js.min.css">
 </head>
 <body>
-<div class="container">
-    <div id="user-list"></div> <!-- Connected users list -->
-    <div id="chat-box"></div> <!-- Chat messages -->
-    <div id="file-list">
-        <strong>Uploaded Files</strong>
-        <ul id="uploaded-files"></ul>
+    <div class="chat-container">
+        <div class="sidebar">
+            <div id="user-list">
+                <h2>Users</h2>
+                <ul id="users"></ul>
+            </div>
+            <div id="file-list">
+                <h2>Files</h2>
+                <ul id="uploaded-files"></ul>
+            </div>
+        </div>
+        <div class="chat-area">
+            <div id="chat-box"></div>
+            <div class="chat-input">
+                <div id="username-display"></div>
+                <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+			<div class="file-upload-container">
+				<form id="file-upload-form">
+					<input type="file" id="file-input" name="file" required>
+					<input type="hidden" name="username" id="upload-username">
+					<button type="submit">Upload File</button>
+				</form>
+			</div>
+        </div>
     </div>
-</div>
-<div class="input-section">
-    <div class="input-container">
-        <div id="username-display"></div> <!-- Username display -->
-        <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
-        <button onclick="sendMessage()">Send</button>
-    </div>
-    <div class="file-upload-container">
-        <form id="file-upload-form">
-            <input type="file" id="file-input" name="file" required>
-            <input type="hidden" name="username" id="upload-username">
-            <button type="submit">Upload File</button>
-        </form>
-    </div>
-</div>
-<!-- Defer non-critical JavaScript -->
-<script defer src="/assets/marked.min.js"></script>
-<script defer src="/assets/purify.min.js"></script>
-<script defer src="/assets/highlight.js.min.css"></script>
-<script defer src="script.js"></script>
+    <script src="/assets/marked.min.js"></script>
+    <script src="/assets/purify.min.js"></script>
+    <script src="/assets/highlight.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

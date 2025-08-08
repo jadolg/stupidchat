@@ -1,395 +1,53 @@
 /* General styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
     margin: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.chat-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background-color: #ffffff;
+    border-right: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#user-list, #file-list {
+    margin-bottom: 20px;
+}
+
+#user-list h2, #file-list h2 {
+    font-size: 16px;
+    color: #333;
+    margin-top: 0;
+}
+
+#users, #uploaded-files {
+    list-style: none;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh; /* Full viewport height */
-    box-sizing: border-box;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
-/* Main container for user list and chat box */
-.container {
-    display: flex;
-    flex-direction: column; /* Stack vertically on small screens */
-    gap: 10px;
-    width: 100%;
-    max-width: 1200px; /* Limit maximum width */
-    flex: 1; /* Take up remaining space */
-    padding: 10px;
-    box-sizing: border-box;
-    margin: 0 auto; /* Center the container */
-}
-
-/* User list */
-#user-list {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    line-height: 1.5;
-    color: #333;
-    order: 1; /* Move user list below chat box on small screens */
-    max-height: 85vh; /* Set a maximum height for the user list */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
-
-/* Chat container */
-#chat-box {
-    width: 100%;
-    flex: 2; /* Take up remaining space */
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* Enable vertical scrolling */
-    font-size: 14px;
-    line-height: 1.5;
-    color: #333;
-    order: 2; /* Ensure chat box is above user list on small screens */
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Add spacing between messages */
-    max-height: 85vh; /* Set a maximum height for the chat box */
-}
-
-/* Input container */
-.input-container {
-    width: 65%;
-}
-
-.file-upload-container {
-    width: 35%;
-    display: flex;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 2px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-#file-upload-form {
-    display: flex;
-    width: 100%;
-    gap: 10px;
-    align-items: center;
-}
-
-#file-input {
-    min-width: 0;
-    flex: 1;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
+#users li, #uploaded-files li {
+    padding: 5px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-#file-upload-form button {
-    white-space: nowrap;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.input-container, .file-upload-container {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    margin: 2px auto;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.input-section {
-    width: 100%;
-    max-width: 1300px;
-    display: flex;
-    flex-direction: column;
-    margin: 10px auto;
-}
-
-/* Username display */
-#username-display {
-    font-weight: bold;
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    white-space: nowrap; /* Prevent wrapping */
-}
-
-/* Input field (textarea) */
-#message-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-    resize: none; /* Prevent manual resizing */
-    overflow-y: hidden; /* Hide scrollbar */
-    line-height: 1.5; /* Improve readability */
-    height: 40px; /* Set a fixed initial height */
-    box-sizing: border-box; /* Ensure padding is included in the height */
-}
-
-#message-input:focus {
-    border-color: #007bff;
-}
-
-/* Send button */
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive design for larger screens */
-@media (min-width: 768px) {
-    .container {
-        flex-direction: row; /* Side-by-side layout on larger screens */
-        gap: 20px;
-    }
-
-    #user-list {
-        width: 200px; /* Fixed width for user list */
-        order: 1; /* Move user list to the left */
-    }
-
-    #chat-box {
-        width: calc(100% - 220px); /* Adjust width to fit beside user list */
-        order: 2; /* Move chat box to the right */
-    }
-
-    .input-section {
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .input-container {
-        width: 65%;
-    }
-
-    .file-upload-container {
-        width: 35%;
-    }
-}
-
-@media (max-width: 767px) {
-    .container {
-        padding: 5px;
-        margin: 0;
-        max-width: 100%;
-    }
-
-    .input-section {
-        padding: 0;
-        margin: 5px 0;
-        max-width: 100%;
-        flex-direction: column;
-    }
-
-    .input-container, .file-upload-container {
-        width: calc(100% - 10px) !important;
-        margin: 2px auto;
-        padding: 5px;
-    }
-
-    #message-input, #file-input {
-        width: calc(100% - 10px);
-        padding: 5px;
-    }
-
-    #user-list, #chat-box {
-        max-width: calc(100% - 10px);
-        padding: 5px;
-        margin: 2px auto;
-    }
-
-    #file-list {
-        max-width: calc(100% - 20px);
-        padding: 5px;
-        margin: 2px auto;
-    }
-}
-
-/* Code block styles */
-pre {
-    background-color: #1e1e1e; /* Black background */
-    padding: 10px;
-    border-radius: 5px;
-    overflow-x: auto;
-    font-family: monospace;
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 10px 0;
-    color: #d4d4d4; /* Light text color */
-}
-
-code {
-    font-family: monospace;
-    background-color: #1e1e1e; /* Black background */
-    padding: 2px 4px;
-    border-radius: 3px;
-    color: #d4d4d4; /* Light text color */
-}
-
-/* Highlight.js theme overrides */
-.hljs {
-    background-color: #1e1e1e; /* Black background */
-    color: #d4d4d4; /* Light text color */
-}
-
-/* Chat message styles */
-.chat-message {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2px; /* Very small spacing between messages */
-    width: 100%; /* Ensure the message takes the full width */
-}
-
-.chat-message .username {
-    font-weight: bold;
-    margin-bottom: 2px; /* Small spacing between username and message */
-    color: #333;
-    font-size: 12px; /* Smaller font size for username */
-    display: none; /* Hide username by default */
-}
-
-.chat-message .message-content {
-    padding: 1px 10px; /* Compact padding */
-    border-radius: 7px; /* Slightly rounded corners for bubble effect */
-    background-color: #f1f1f1; /* Default background for received messages */
-    color: #333;
-    max-width: 80%; /* Limit width for bubble effect */
-    word-wrap: break-word;
-    font-size: 14px; /* Smaller font size for messages */
-    line-height: 1.2; /* Improved line height */
-    position: relative;
-}
-
-/* Show username only for the first message in a group */
-.chat-message:not(.same-user) .username {
-    display: block; /* Show username */
-}
-
-/* Sent messages (current user) */
-.chat-message.sent {
-    align-items: flex-end; /* Align to the right */
-}
-
-.chat-message.sent .message-content {
-    background-color: #007bff; /* Blue background for sent messages */
-    color: white; /* White text for sent messages */
-    border-bottom-right-radius: 2px; /* Adjust bubble shape */
-}
-
-/* Received messages (other users) */
-.chat-message.received {
-    align-items: flex-start; /* Align to the left */
-}
-
-.chat-message.received .message-content {
-    background-color: #f1f1f1; /* Light gray background for received messages */
-    color: #333; /* Dark text for received messages */
-    border-bottom-left-radius: 2px; /* Adjust bubble shape */
-}
-
-/* System messages (join/leave notifications) */
-.chat-message.system {
-    align-items: center;
-}
-
-.chat-message.system .message-content {
-    background-color: #e0e0e0; /* Light gray for system messages */
-    color: #555;
-    font-size: 12px; /* Smaller font size for system messages */
-    padding: 6px 10px; /* Compact padding */
-    border-radius: 10px; /* Slight rounding for system messages */
-    border: none; /* No border for system messages */
-}
-
-/* Remove margin for consecutive messages from the same user */
-.chat-message.same-user {
-    margin-top: -2px; /* Overlap messages slightly */
-}
-
-/* Markdown list styles */
-.message-content ul,
-.message-content ol {
-    margin: 6px 0; /* Add some margin around lists */
-    padding-left: 20px; /* Indent lists */
-}
-
-.message-content ul {
-    list-style-type: disc; /* Use bullets for unordered lists */
-}
-
-.message-content ol {
-    list-style-type: decimal; /* Use numbers for ordered lists */
-}
-
-.message-content li {
-    margin-bottom: 4px; /* Add spacing between list items */
-}
-
-#file-list {
-    position: relative; /* Ensure absolute positioning works */
-    width: 100%;
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* Enable vertical scrolling */
-    font-size: 14px;
-    line-height: 1.5;
-    color: #333;
-    order: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Add spacing between messages */
-    max-height: 85vh; /* Set a maximum height for the chat box */
-}
-
-#uploaded-files {
-    list-style-type: none;
-    padding: 0;
-}
-
-#uploaded-files li {
-    margin: 5px 0;
 }
 
 #uploaded-files a {
@@ -399,4 +57,120 @@ code {
 
 #uploaded-files a:hover {
     text-decoration: underline;
+}
+
+/* Chat Area */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #e5ddd5;
+    background-image: url('https://www.transparenttextures.com/patterns/subtle-dots.png');
+}
+
+#chat-box {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px 20px;
+    background-color: #f0f2f5;
+    border-top: 1px solid #ddd;
+    align-items: center;
+}
+
+#username-display {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#message-input {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    padding: 10px 15px;
+    font-size: 14px;
+    resize: none;
+    overflow-y: hidden;
+    line-height: 1.4;
+}
+
+#message-input:focus {
+    outline: none;
+}
+
+.chat-input button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload-container {
+    padding: 10px 20px;
+    background-color: #f0f2f5;
+}
+
+/* Chat Messages */
+.chat-message {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message .username {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.chat-message .message-content {
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.chat-message.sent {
+    align-items: flex-end;
+}
+
+.chat-message.sent .message-content {
+    background-color: #dcf8c6;
+    color: #333;
+}
+
+.chat-message.received {
+    align-items: flex-start;
+}
+
+.chat-message.received .message-content {
+    background-color: #ffffff;
+    color: #333;
+}
+
+.chat-message.system {
+    align-items: center;
+    font-size: 12px;
+    color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none; /* Hide sidebar on small screens */
+    }
 }

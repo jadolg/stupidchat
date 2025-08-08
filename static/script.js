@@ -8,6 +8,13 @@ window.onload = function () {
     setTimeout(() => {
         justLoaded = false;
     }, 1500);
+
+    const menuButton = document.getElementById('menu-button');
+    const sidebar = document.querySelector('.sidebar');
+
+    menuButton.addEventListener('click', () => {
+        sidebar.classList.toggle('hidden');
+    });
 };
 
 // Add offline/online event handlers

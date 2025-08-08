@@ -12,6 +12,9 @@ body {
     display: flex;
     width: 100%;
     height: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    box-shadow: 0 0 25px rgba(0,0,0,0.05);
 }
 
 /* Sidebar */
@@ -235,4 +238,47 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 768px) {
+    .chat-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .chat-area {
+        padding-top: 10px;
+    }
+
+    #menu-button {
+        top: 5px;
+        left: 5px;
+    }
+
+    .input-area {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+    }
+
+    .chat-input, .file-upload-container {
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .file-upload-container {
+        margin-top: 10px;
+        justify-content: center;
+    }
+
+    #file-upload-form {
+        width: 100%;
+        justify-content: center;
+    }
+}
 

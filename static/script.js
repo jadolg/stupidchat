@@ -5,6 +5,9 @@ window.onload = function () {
     requestNotificationPermission();
     justLoaded = true;
     fetchUploadedFiles(); // Fetch and display uploaded files on page load
+    setTimeout(() => {
+        justLoaded = false;
+    }, 1500);
 };
 
 // Add offline/online event handlers
@@ -118,6 +121,11 @@ function connectWebSocket() {
             showSystemMessage('You are back online');
         }
         ws.send(username); // Send the username to the server
+
+        // Send a ping to the server every 30 seconds
+        setInterval(() => {
+            ws.send(JSON.stringify({ type: 'ping' }));
+        }, 30000);
     };
 
     ws.onclose = () => {
@@ -156,7 +164,6 @@ function connectWebSocket() {
                 if (!isCurrentUser && !justLoaded) {
                     showNotification(data.username, data.message);
                 }
-                justLoaded = false;
 
                 break;
 
@@ -190,6 +197,9 @@ function connectWebSocket() {
                 // Add the file to the uploaded files list
                 const fileList = document.getElementById("uploaded-files");
                 fileList.insertAdjacentHTML("beforeend", `<li><a href="/download?file=${data.fileName}" download="${data.fileName}">${data.fileName}</a></li>`);
+                break;
+            case "pong":
+                // Server acknowledged the ping
                 break;
         }
     };

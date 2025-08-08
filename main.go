@@ -144,7 +144,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Handle incoming message
-		handleIncomingMessage(username, string(message))
+		handleIncomingMessage(client, string(message))
 	}
 }
 
@@ -197,10 +197,23 @@ func handleClientDisconnect(client *Client, username string) {
 }
 
 // handleIncomingMessage processes incoming chat messages
-func handleIncomingMessage(username, message string) {
+func handleIncomingMessage(client *Client, message string) {
+	var msg Message
+	if err := json.Unmarshal([]byte(message), &msg); err == nil {
+		switch msg.Type {
+		case "ping":
+			pong := Message{Type: "pong"}
+			pongBytes, _ := json.Marshal(pong)
+			if err := client.conn.WriteMessage(websocket.TextMessage, pongBytes); err != nil {
+				log.Println("Pong error:", err)
+			}
+			return
+		}
+	}
+
 	chatMessage := Message{
 		Type:     "message",
-		Username: username,
+		Username: client.username,
 		Message:  message,
 	}
 	chatMessageBytes, _ := json.Marshal(chatMessage)

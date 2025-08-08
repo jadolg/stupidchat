@@ -76,11 +76,23 @@ body {
     flex-direction: column;
 }
 
-.chat-input {
+.input-area {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
     background-color: #f0f2f5;
     border-top: 1px solid #ddd;
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.file-upload-container {
+    display: flex;
     align-items: center;
 }
 
@@ -109,19 +121,53 @@ body {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     margin-left: 10px;
     cursor: pointer;
-    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+.chat-input button svg {
+    width: 20px;
+    height: 20px;
 }
 
 .file-upload-container {
     padding: 10px 20px;
     background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+}
+
+#file-upload-form {
+    display: flex;
+    align-items: center;
+}
+
+#file-input {
+    border: 1px solid #ccc;
+    border-radius: 18px;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.file-upload-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    padding: 8px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 /* Chat Messages */
@@ -172,5 +218,27 @@ body {
 @media (max-width: 768px) {
     .sidebar {
         display: none; /* Hide sidebar on small screens */
+    }
+
+    .input-area {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px;
+    }
+
+    .chat-input, .file-upload-container {
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .file-upload-container {
+        margin-top: 10px;
+        justify-content: center;
+    }
+
+    #file-upload-form {
+        width: 100%;
+        justify-content: center;
     }
 }
